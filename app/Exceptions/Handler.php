@@ -46,4 +46,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($request->isJson()) {
+            $response = [
+                'errors' => 'Algo deu errado!'
+            ];
+
+            if(config('app.debug')) {
+                $response['status'] = $exception->getStatusCode();
+                $response['exception'] = get_class($exception);
+                $response['message'] = $exception->getMessage();
+            }
+
+            $status = ($this->isHttpException($exception))? $exception->getStatusCode() : 400;
+
+            return response()->json($response, $status);
+        }
+
+        return parent::render($request, $exception);
+    }
 }

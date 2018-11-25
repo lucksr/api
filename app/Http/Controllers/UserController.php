@@ -26,14 +26,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         $User = User::findOrfail($id);
- 
+        
         if($User->delete()) {
             return new UserResource($User);
         } 
     }
  
-    public function store(Request $request) {
-        $User = $request->isMethod('put') ? User::findOrFail($request->id) : new User;
+    public function store(Request $request, $id = null) {
+        $User = $request->isMethod('put') ? User::findOrFail($id) : new User;
             
         $User->name = $request->input('name');
         $User->email = $request->input('email');

@@ -20,8 +20,4 @@ class User extends JsonResource
             'email' => $this->email,
         ];
     }
-
-    public static function collection($resource){
-        return new UserResourceCollection($resource);
-    }
 }
